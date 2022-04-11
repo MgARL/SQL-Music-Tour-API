@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     stage_id:{
       type:DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: 'stages',
         key: 'stage_id'
@@ -29,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     event_id:{
       type:DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: 'events',
         key: 'event_id'
