@@ -1,16 +1,15 @@
 const bands = require('express').Router()
 const db = require('../models')
-const band = require('../models/band')
 const { Band } = db
 const { Op } = require('sequelize')
 
 // Find all bands
-bands.get('/', async (req, res) =>{
+bands.get('/', async (req, res) => {
     try {
         const foundBands = await Band.findAll({
-            order: [ ['available_start_time', 'ASC'] ],
+            order: [['available_start_time', 'ASC']],
             where: {
-                name: {[Op.like]: `%${req.query.name ? req.query.name : '' }%`}
+                name: { [Op.like]: `%${req.query.name ? req.query.name : ''}%` }
             }
         })
         res.status(200).json(foundBands)
@@ -19,15 +18,15 @@ bands.get('/', async (req, res) =>{
     }
 })
 // Find specific Band
-bands.get('/:id', async (req,res) => {
+bands.get('/:id', async (req, res) => {
     try {
         const foundBand = await Band.findOne({
-            where: {band_id: req.params.id }
+            where: { band_id: req.params.id }
         })
-        if(foundBand){
+        if (foundBand) {
             res.status(200).json(foundBand)
         }
-        else{
+        else {
             res.status(404).json({
                 message: "Band not Found"
             })
@@ -39,7 +38,7 @@ bands.get('/:id', async (req,res) => {
 })
 
 // Create a Band
-bands.post('/', async (req,res) => {
+bands.post('/', async (req, res) => {
     try {
         const newBand = await Band.create(req.body)
         res.status(201).json(newBand)
@@ -48,7 +47,7 @@ bands.post('/', async (req,res) => {
     }
 })
 // Update Band
-bands.put('/:id', async (req,res) => {
+bands.put('/:id', async (req, res) => {
     try {
         const updatedBands = await Band.update(req.body, {
             where: {
@@ -63,7 +62,7 @@ bands.put('/:id', async (req,res) => {
     }
 })
 // delete band
-bands.delete('/:id', async (req, res) =>{
+bands.delete('/:id', async (req, res) => {
     try {
         const deletedBands = await Band.destroy({
             where: {
