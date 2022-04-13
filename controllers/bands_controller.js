@@ -24,7 +24,15 @@ bands.get('/:id', async (req,res) => {
         const foundBand = await Band.findOne({
             where: {band_id: req.params.id }
         })
-        res.status(200).json(foundBand)
+        if(foundBand){
+            res.status(200).json(foundBand)
+        }
+        else{
+            res.status(404).json({
+                message: "Band not Found"
+            })
+        }
+
     } catch (error) {
         res.status(500).json(error)
     }
